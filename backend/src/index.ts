@@ -11,10 +11,37 @@ import refferRoutes from "./routes/refferalroutes";
 import userroutes from "./routes/user"
 import dashboardRoutes from "./routes/dashboardroutes";
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",              // local dev
+  "https://reffer-earn-psi.vercel.app", // deployed frontend
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `CORS error: This site ${origin} is not allowed.`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 
 //  DB CONNECT 
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
+
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() => console.log(" MongoDB Connected"))
