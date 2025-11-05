@@ -26,6 +26,7 @@ interface IUser extends mongoose.Document {
   credits: number;
 }
 
+
 const User = mongoose.model<IUser>("User", userSchema);
 
 router.post("/register", async (req: Request, res: Response) => {
