@@ -7,14 +7,17 @@ const router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { userId, amount } = req.body;
+    const amount = "42"
+    const { userId } = req.body;
 
     // Create purchase
     const purchase = await Purchase.create({ userId, amount });
 
     // Check first purchase
     const totalPurchases = await Purchase.countDocuments({ userId });
-    const isFirstPurchase = totalPurchases === 1;
+    console.log(totalPurchases)
+    const isFirstPurchase = totalPurchases <= 1;
+    console.log(isFirstPurchase)
     if (isFirstPurchase) {
       
        await Purchase.updateOne({userId},{$set :{isFirstPurchase:true}})

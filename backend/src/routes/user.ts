@@ -30,7 +30,7 @@ const User = mongoose.model<IUser>("User", userSchema);
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
-    const { name, email, password, referralCode: referredBy } = req.body;
+    const { name, email, password, refferalcode: referredBy } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ message: "All fields required" });
 
@@ -52,6 +52,14 @@ router.post("/register", async (req: Request, res: Response) => {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET as string, {
       expiresIn: "7d",
     });
+    if(referredBy){
+      const user  = await User_schema.findOne({referralCode:referredBy});
+      if(user){
+        const reffere_id = user._id
+
+        const reffer = await Referral.create({referrerId:reffere_id,referredId:newUser._id}) 
+      }
+    }
 
     res.json({ success: true, user: newUser, token });
   } catch (err: any) {

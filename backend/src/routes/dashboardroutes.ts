@@ -7,13 +7,16 @@ const router = express.Router();
 
 router.post("/info", async (req: Request, res: Response) => {
   try {
-    const {userId} = req.body;
-    const user = await User_schema.findOne({userId});
+    console.log("body",req.body)
+    const {_id} = req.body;
+    const user = await User_schema.findById({_id});
     if(user){
-        const total_reffered = await Referral.countDocuments({referrerId: userId})
-        const converted_refferd =  await Referral.countDocuments({referrerId:userId,status:"converted"})
+      const name = user?.name
+      const refferalcode = user.referralCode
+        const total_reffered = await Referral.countDocuments({referrerId: _id})
+        const converted_refferd =  await Referral.countDocuments({referrerId:_id,status:"converted"})
         const credits = user?.credits;
-        res.status(201).json({credits,total_reffered,converted_refferd})
+        res.status(201).json({refferalcode,name,credits,total_reffered,converted_refferd})
         
     }
     else {
