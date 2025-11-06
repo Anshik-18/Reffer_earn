@@ -7,7 +7,7 @@ Built with **Next.js + Express + MongoDB + JWT**, deployed on **Vercel (frontend
 
 ## 🚀 Live Links
 
-- **Frontend:** [https://reffer-earn-psi.vercel.app](https://reffer-earn-psi.vercel.app)
+- **Frontend:** [https://reffer-earn-psi.vercel.app](https://reffer-earn-psi.vercel.app/home)
 - **Backend API:** [https://reffer-earn-6slr.onrender.com](https://reffer-earn-6slr.onrender.com)
 - **GitHub Repo:** [Reffer Earn](https://github.com/Anshik-18/Reffer_earn)
 
