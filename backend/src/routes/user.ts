@@ -54,7 +54,7 @@ router.post("/register", async (req: Request, res: Response) => {
       expiresIn: "7d",
     });
     if(referredBy){
-      const user  = await User_schema.findOne({referralCode:referredBy});
+      const user  = await User_schema.findOne({referralcode:referredBy});
       if(user){
         const reffere_id = user._id
 
