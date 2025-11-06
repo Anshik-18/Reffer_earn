@@ -31,7 +31,7 @@ const User = mongoose.model<IUser>("User", userSchema);
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
-    const { name, email, password, refferalcode: referredBy } = req.body;
+    const { name, email, password, refferalCode: referredBy } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ message: "All fields required" });
 
