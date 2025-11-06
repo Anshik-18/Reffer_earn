@@ -60,6 +60,7 @@ localStorage.setItem('user', JSON.stringify(user))
         name: formData.name,
         email: formData.email,
         password: formData.password,
+       refferalCode: formData.refferalcode,
         refferalcode: formData.refferalcode || undefined,
       });
          console.log("Before dispatch:", { user: res.data.user, token: res.data.token });

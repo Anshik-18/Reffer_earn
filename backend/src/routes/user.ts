@@ -31,7 +31,8 @@ const User = mongoose.model<IUser>("User", userSchema);
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
-    const { name, email, password, refferalcode: referredBy } = req.body;
+    const { name, email, password, refferalCode: referredBy } = req.body;
+    console.log(referredBy)
     if (!name || !email || !password)
       return res.status(400).json({ message: "All fields required" });
 
@@ -54,11 +55,16 @@ router.post("/register", async (req: Request, res: Response) => {
       expiresIn: "7d",
     });
     if(referredBy){
+      console.log("finding user")
       const user  = await User_schema.findOne({referralCode:referredBy});
+      console.log("user found",user)
       if(user){
+        console.log("doing this ")
         const reffere_id = user._id
 
         const reffer = await Referral.create({referrerId:reffere_id,referredId:newUser._id}) 
+        console.log(reffer)
+
       }
     }
 
