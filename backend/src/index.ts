@@ -30,23 +30,13 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue:false
   })
 );
 app.use(express.json());
 
 //  DB CONNECT 
-app.options("/*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
-  res.sendStatus(200);
-});
+
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() => console.log(" MongoDB Connected"))
